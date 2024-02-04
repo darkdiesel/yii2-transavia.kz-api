@@ -9,5 +9,8 @@ return [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
+//        'transAviaKZApi' => [
+//            'class' => 'common\components\TransAviaKZComponent',
+//        ],
     ],
 ];

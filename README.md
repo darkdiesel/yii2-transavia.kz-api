@@ -7,11 +7,72 @@
 </p>
 
 ## Table of content
+- [About](#About)
 - [Project Structure](#project-structure)
 - [Install](#install)
 - [Run](#run-application)
 - [Migration](#migration)
 - [Useful commands](#useful-commands)
+
+## About
+This project as technical task to implement API for [transavia.kz](http://docs.transavia.kz/en) to provide my skills and code style.
+
+Created TransAviaKZComponent component. 
+
+Using as component where you want
+
+```php
+        use common\components\TransAviaKZComponent;
+        
+        //... 
+
+        $api = new TransAviaKZComponent();
+
+        $requestRes = $api->searchFlight($searchData);
+
+        $requestRes = $api->familyFareFlight($hash, $sessionId);
+        $requestRes = $api->checkPriceFlight($hash, $sessionId, $orderId, $fareHash);
+        $requestRes = $api->bookFlight($bookData);
+        $requestRes = $api->bookFlight($bookData);
+        $requestRes = $api->cancelBookFlight($orderId);
+        $requestRes = $api->approveFlight($orderId);
+        $requestRes = $api->orderInfo($orderId);
+        $requestRes = $api->flightFareRulesInfo($orderId);
+```
+
+Or you can use as global component. Uncomment declaration in config main.php file to use.
+
+config/main.php
+```php
+ [
+    //...
+    'components' => [
+        //...
+        'transAviaKZApi' => [
+            'class' => 'common\components\TransAviaKZComponent',
+        ],
+        //...
+    ],
+    //...
+];
+
+```
+
+and you like this:
+
+```php
+        $searchData = [
+            "routes" => [
+                [
+                    "departure_code" => "MOW",
+                    "arrival_code" => "MSQ",
+                    "departure_date" => "2024-02-10"
+                ]
+            ]
+        ]; 
+        
+        $searchRes = Yii::$app->transAviaKZApi->searchFlight($searchData);
+```
 
 ## Project structure
 
@@ -60,22 +121,19 @@ environments/            contains environment-based overrides
 ## Run application:
 
 1. Use docker, vagrant or setup 2 hosts `admin` to `/backend/web` and `front` to `frontend/web`
-2. Open site with browser and go to sign up page.
-3. Fill fields and create user.
-4. Go to `frontend\runtime\mail\` and open `*.eml file`
-5. Copy confirm url from file and made some next modification to it:
-    - for example we have next url:
-   ```
-    http://yii2-transaviakz-api.loc/index.p=
-    hp?r=3Dsite%2Fverify-email&amp;token=3DL13CX6Fro9E_MYdJ8gGRK_0GCleoRpBa_170=
-    2598408
-   ```
-- delete soft line breaks ‘=’ and newlines to create a single line with the line below
-- change ‘=3D’ to ‘=’ // after r and after token
-- change ‘&amp;‘ to '&'
-- change ‘%2F‘ to ‘/‘
-- and we have `http://yii2-transaviakz-api.loc/index.php?r=site/verify-email&token=3DL13CX6Fro9E_MYdJ8gGRK_0GCleoRpBa_1702598408`
-- put this url to browser and if everything is ok your user will be verified
+2. Update `common\config\params-local.php` and add api variables
+```php
+return [
+    'transaviakz.host' => '',
+    'transaviakz.username' => '',
+    'transaviakz.password' => '',
+];
+
+```
+3. Check url as example output for search results `http://transaviakz.loc/index.php?r=test-api%2Ftest`. Code located here `frontend\controllers\TestApiController.php`
+3. Component location `common/components/TransAviaKZComponent.php`
+
+
 
 ## Useful commands:
 
