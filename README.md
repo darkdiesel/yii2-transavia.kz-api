@@ -2,7 +2,7 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">Yii 2 TransAvia.KZ API implementation</h1>
+    <h1 align="center">Yii 2 TransAvia.KZ API</h1>
     <br>
 </p>
 
@@ -22,27 +22,27 @@ Created TransAviaKZComponent component.
 Using as component where you want
 
 ```php
-        use common\components\TransAviaKZComponent;
-        
-        //... 
+use common\components\TransAviaKZComponent;
 
-        $api = new TransAviaKZComponent();
+//... 
 
-        $requestRes = $api->searchFlight($searchData);
+$api = new TransAviaKZComponent();
 
-        $requestRes = $api->familyFareFlight($hash, $sessionId);
-        $requestRes = $api->checkPriceFlight($hash, $sessionId, $orderId, $fareHash);
-        $requestRes = $api->bookFlight($bookData);
-        $requestRes = $api->bookFlight($bookData);
-        $requestRes = $api->cancelBookFlight($orderId);
-        $requestRes = $api->approveFlight($orderId);
-        $requestRes = $api->orderInfo($orderId);
-        $requestRes = $api->flightFareRulesInfo($orderId);
+$requestRes = $api->searchFlight($searchData);
+
+$requestRes = $api->familyFareFlight($hash, $sessionId);
+$requestRes = $api->checkPriceFlight($hash, $sessionId, $orderId, $fareHash);
+$requestRes = $api->bookFlight($bookData);
+$requestRes = $api->bookFlight($bookData);
+$requestRes = $api->cancelBookFlight($orderId);
+$requestRes = $api->approveFlight($orderId);
+$requestRes = $api->orderInfo($orderId);
+$requestRes = $api->flightFareRulesInfo($orderId);
 ```
 
-Or you can use as global component. Uncomment declaration in config main.php file to use.
+Or you can use as global component. For this uncomment component declaration in config main.php file to use:
 
-config/main.php
+**config/main.php**
 ```php
  [
     //...
@@ -55,10 +55,9 @@ config/main.php
     ],
     //...
 ];
-
 ```
 
-and you like this:
+and now you can use component like this:
 
 ```php
         $searchData = [
@@ -128,7 +127,6 @@ return [
     'transaviakz.username' => '',
     'transaviakz.password' => '',
 ];
-
 ```
 3. Check url as example output for search results `http://transaviakz.loc/index.php?r=test-api%2Ftest`. Code located here `frontend\controllers\TestApiController.php`
 3. Component location `common/components/TransAviaKZComponent.php`
